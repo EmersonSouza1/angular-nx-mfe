@@ -1,180 +1,96 @@
-# Monorepo Nx + Angular (Host + Module Federation)
+# Nxseed2
 
-Este guia cria um monorepo **Nx + Angular** com:
+<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
-- `apps/portal` (host)
-- `apps/mfe-fiscal` (remote)
-- `apps/mfe-cadastro` (remote)
-- `libs/shared/ui`
-- `libs/shared/auth`
-- `libs/shared/contracts`
+✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
 
-Tudo com **Angular standalone**, **routing** e configuração moderna (`bootstrapApplication`, `provideRouter`, etc.).
+[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
 
----
+## Run tasks
 
-## 1) Comandos Nx (exatos) para gerar tudo
+To run tasks with Nx use:
 
-> Execute os comandos na ordem abaixo.
-
-```bash
-# 1. Criar workspace Nx Angular (integrated monorepo)
-npx create-nx-workspace@latest angular-nx-mfe \
-  --preset=angular-monorepo \
-  --workspaceType=integrated \
-  --appName=portal \
-  --routing=true \
-  --style=scss \
-  --standaloneApi=true \
-  --bundler=webpack \
-  --nxCloud=skip \
-  --packageManager=npm
-
-cd angular-nx-mfe
-
-# 2. Adicionar plugin Angular (caso não venha no preset)
-npm i -D @nx/angular
-
-# 3. Converter/gerar o portal como host de Module Federation
-nx g @nx/angular:host portal \
-  --remotes=mfe-fiscal,mfe-cadastro \
-  --routing=true \
-  --style=scss \
-  --standalone=true
-
-# 4. Gerar remote fiscal
-nx g @nx/angular:remote mfe-fiscal \
-  --host=portal \
-  --routing=true \
-  --style=scss \
-  --standalone=true
-
-# 5. Gerar remote cadastro
-nx g @nx/angular:remote mfe-cadastro \
-  --host=portal \
-  --routing=true \
-  --style=scss \
-  --standalone=true
-
-# 6. Gerar libs compartilhadas
-nx g @nx/angular:library shared-ui \
-  --directory=shared/ui \
-  --standalone \
-  --routing=false \
-  --style=scss
-
-nx g @nx/angular:library shared-auth \
-  --directory=shared/auth \
-  --standalone \
-  --routing=false \
-  --style=scss
-
-nx g @nx/angular:library shared-contracts \
-  --directory=shared/contracts \
-  --standalone \
-  --routing=false \
-  --style=scss
-
-# 7. Bootstrap no projeto (estilos base para shared/ui)
-npm i bootstrap
+```sh
+npx nx <target> <project-name>
 ```
 
----
+For example:
 
-## 2) Estrutura final esperada do monorepo
-
-```text
-angular-nx-mfe/
-├─ apps/
-│  ├─ portal/
-│  │  ├─ src/
-│  │  │  ├─ app/
-│  │  │  │  ├─ app.routes.ts
-│  │  │  │  └─ ...
-│  │  │  ├─ main.ts
-│  │  │  └─ styles.scss
-│  │  ├─ module-federation.config.ts
-│  │  └─ project.json
-│  ├─ mfe-fiscal/
-│  │  ├─ src/
-│  │  │  ├─ app/
-│  │  │  │  ├─ remote-entry/
-│  │  │  │  ├─ app.routes.ts
-│  │  │  │  └─ ...
-│  │  │  ├─ main.ts
-│  │  │  └─ styles.scss
-│  │  ├─ module-federation.config.ts
-│  │  └─ project.json
-│  └─ mfe-cadastro/
-│     ├─ src/
-│     │  ├─ app/
-│     │  │  ├─ remote-entry/
-│     │  │  ├─ app.routes.ts
-│     │  │  └─ ...
-│     │  ├─ main.ts
-│     │  └─ styles.scss
-│     ├─ module-federation.config.ts
-│     └─ project.json
-├─ libs/
-│  └─ shared/
-│     ├─ ui/
-│     │  ├─ src/lib/
-│     │  │  ├─ components/
-│     │  │  └─ styles/
-│     │  └─ project.json
-│     ├─ auth/
-│     │  ├─ src/lib/
-│     │  │  ├─ auth.service.ts
-│     │  │  ├─ auth.guard.ts
-│     │  │  └─ auth.interceptor.ts
-│     │  └─ project.json
-│     └─ contracts/
-│        ├─ src/lib/
-│        │  ├─ dto/
-│        │  ├─ interfaces/
-│        │  └─ events/
-│        └─ project.json
-├─ nx.json
-├─ package.json
-└─ tsconfig.base.json
+```sh
+npx nx build myproject
 ```
 
----
+These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
 
-## 3) Scripts para rodar portal + remotes em paralelo
+[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-Adicione no `package.json`:
+## Add new projects
 
-```json
-{
-  "scripts": {
-    "start": "nx run-many -t serve -p portal,mfe-fiscal,mfe-cadastro --parallel=3",
-    "start:portal": "nx serve portal",
-    "start:mfe-fiscal": "nx serve mfe-fiscal",
-    "start:mfe-cadastro": "nx serve mfe-cadastro",
-    "build:all": "nx run-many -t build -p portal,mfe-fiscal,mfe-cadastro --parallel=3",
-    "test:all": "nx run-many -t test -p portal,mfe-fiscal,mfe-cadastro --parallel=3"
-  }
-}
+While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+
+To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
+```sh
+npx nx add @nx/react
 ```
 
----
+Use the plugin's generator to create new projects. For example, to create a new React app or library:
 
-## 4) Sugestão de implementação das libs shared
+```sh
+# Generate an app
+npx nx g @nx/react:app demo
 
-- `libs/shared/ui`
-  - componentes standalone reutilizáveis (`UiButtonComponent`, `UiCardComponent`)
-  - `styles/_variables.scss` e `styles/_mixins.scss`
-  - import global de Bootstrap em `styles.scss` do host/remotes
+# Generate a library
+npx nx g @nx/react:lib some-lib
+```
 
-- `libs/shared/auth`
-  - `AuthService` para sessão/token
-  - `AuthGuard` (`CanActivateFn`) com redirecionamento para login
-  - `AuthInterceptor` com `HttpInterceptorFn` para anexar `Authorization`
+You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
 
-- `libs/shared/contracts`
-  - interfaces de domínio
-  - DTOs de request/response
-  - eventos de integração entre MFEs (ex.: `UserLoggedInEvent`)
+[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-Com esse setup, você já começa com arquitetura pronta para escalar host + remotes em Angular moderno com Nx.
+## Set up CI!
+
+### Step 1
+
+To connect to Nx Cloud, run the following command:
+
+```sh
+npx nx connect
+```
+
+Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+
+- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+### Step 2
+
+Use the following command to configure a CI workflow for your workspace:
+
+```sh
+npx nx g ci-workflow
+```
+
+[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Install Nx Console
+
+Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+
+[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Useful links
+
+Learn more:
+
+- [Learn more about this workspace setup](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
+- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+And join the Nx community:
+- [Discord](https://go.nx.dev/community)
+- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
+- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
+- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)

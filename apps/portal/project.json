@@ -7,57 +7,6 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-architects/native-federation:build",
-      "options": {},
-      "configurations": {
-        "production": {
-          "target": "portal:esbuild:production"
-        },
-        "development": {
-          "target": "portal:esbuild:development",
-          "dev": true
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "serve": {
-      "executor": "@angular-architects/native-federation:build",
-      "options": {
-        "target": "portal:serve-original:development",
-        "rebuildDelay": 500,
-        "dev": true,
-        "cacheExternalArtifacts": false,
-        "port": 0
-      },
-      "configurations": {
-        "production": {
-          "target": "portal:serve-original:production"
-        },
-        "development": {
-          "target": "portal:serve-original:development",
-          "dev": true
-        }
-      },
-      "defaultConfiguration": "development"
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
-    "test": {
-      "executor": "@angular/build:unit-test",
-      "options": {}
-    },
-    "serve-static": {
-      "continuous": true,
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "portal:build",
-        "staticFilePath": "dist/apps/portal/browser",
-        "spa": true,
-        "port": 4200
-      }
-    },
-    "esbuild": {
       "executor": "@angular/build:application",
       "outputs": [
         "{options.outputPath}"
@@ -71,11 +20,6 @@
           {
             "glob": "**/*",
             "input": "apps/portal/public"
-          },
-          {
-            "glob": "**/*",
-            "input": "apps/portal/src/assets",
-            "output": "/assets/"
           }
         ],
         "styles": [
@@ -106,19 +50,36 @@
       },
       "defaultConfiguration": "production"
     },
-    "serve-original": {
+    "serve": {
       "continuous": true,
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "portal:esbuild:production"
+          "buildTarget": "portal:build:production"
         },
         "development": {
-          "buildTarget": "portal:esbuild:development"
+          "buildTarget": "portal:build:development"
         }
       },
       "defaultConfiguration": "development",
       "options": {
+        "port": 4200
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {}
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "portal:build",
+        "staticFilePath": "dist/apps/portal/browser",
+        "spa": true,
         "port": 4200
       }
     }
