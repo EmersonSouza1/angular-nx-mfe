@@ -1,0 +1,24 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@nxseed2/ui": ["libs/shared/ui/src/index.ts"],
+      "@nxseed2/auth": ["libs/shared/auth/src/index.ts"],
+      "@nxseed2/contracts": ["libs/shared/contracts/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
