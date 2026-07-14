@@ -18,7 +18,7 @@ Portal Angular para centralizar módulos da empresa. O `portal` é o shell e os 
 ## Desenvolvimento
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 npm run start:all
 ```
 
