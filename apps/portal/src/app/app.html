@@ -4,6 +4,6 @@
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Início</a>
     <a routerLink="/fiscal" routerLinkActive="active">Fiscal</a>
   </nav>
-  <span class="environment">Ambiente local</span>
+  <span class="environment">{{ environmentLabel }}</span>
 </header>
 <main class="content"><router-outlet /></main>
