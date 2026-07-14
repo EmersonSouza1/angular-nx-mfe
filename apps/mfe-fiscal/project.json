@@ -4,14 +4,24 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/mfe-fiscal/src",
-  "tags": [],
+  "tags": ["type:app", "scope:fiscal"],
   "targets": {
     "build": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": {},
+      "configurations": {
+        "production": { "target": "mfe-fiscal:esbuild:production" },
+        "development": { "target": "mfe-fiscal:esbuild:development", "dev": true }
+      },
+      "defaultConfiguration": "production"
+    },
+    "esbuild": {
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/mfe-fiscal",
         "browser": "apps/mfe-fiscal/src/main.ts",
+        "polyfills": ["zone.js"],
         "tsConfig": "apps/mfe-fiscal/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -48,17 +58,20 @@
     },
     "serve": {
       "continuous": true,
-      "executor": "@angular/build:dev-server",
+      "executor": "@angular-architects/native-federation:build",
       "options": {
+        "target": "mfe-fiscal:serve-original:development",
+        "rebuildDelay": 0,
+        "dev": true,
         "port": 4201
-      },
+      }
+    },
+    "serve-original": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
       "configurations": {
-        "production": {
-          "buildTarget": "mfe-fiscal:build:production"
-        },
-        "development": {
-          "buildTarget": "mfe-fiscal:build:development"
-        }
+        "production": { "buildTarget": "mfe-fiscal:esbuild:production" },
+        "development": { "buildTarget": "mfe-fiscal:esbuild:development" }
       },
       "defaultConfiguration": "development"
     },
@@ -67,7 +80,11 @@
     },
     "test": {
       "executor": "@angular/build:unit-test",
-      "options": {}
+      "options": {
+        "runner": "vitest",
+        "buildTarget": "mfe-fiscal:esbuild:development",
+        "tsConfig": "apps/mfe-fiscal/tsconfig.spec.json"
+      }
     },
     "serve-static": {
       "continuous": true,

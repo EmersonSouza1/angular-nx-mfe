@@ -4,9 +4,18 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/portal/src",
-  "tags": [],
+  "tags": ["type:app", "scope:portal"],
   "targets": {
     "build": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": {},
+      "configurations": {
+        "production": { "target": "portal:esbuild:production" },
+        "development": { "target": "portal:esbuild:development", "dev": true }
+      },
+      "defaultConfiguration": "production"
+    },
+    "esbuild": {
       "executor": "@angular/build:application",
       "outputs": [
         "{options.outputPath}"
@@ -14,12 +23,18 @@
       "options": {
         "outputPath": "dist/apps/portal",
         "browser": "apps/portal/src/main.ts",
+        "polyfills": ["zone.js"],
         "tsConfig": "apps/portal/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
             "input": "apps/portal/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/portal/src/assets",
+            "output": "assets"
           }
         ],
         "styles": [
@@ -52,26 +67,33 @@
     },
     "serve": {
       "continuous": true,
-      "executor": "@angular/build:dev-server",
-      "configurations": {
-        "production": {
-          "buildTarget": "portal:build:production"
-        },
-        "development": {
-          "buildTarget": "portal:build:development"
-        }
-      },
-      "defaultConfiguration": "development",
+      "executor": "@angular-architects/native-federation:build",
       "options": {
+        "target": "portal:serve-original:development",
+        "rebuildDelay": 0,
+        "dev": true,
         "port": 4200
       }
+    },
+    "serve-original": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "configurations": {
+        "production": { "buildTarget": "portal:esbuild:production" },
+        "development": { "buildTarget": "portal:esbuild:development" }
+      },
+      "defaultConfiguration": "development"
     },
     "lint": {
       "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@angular/build:unit-test",
-      "options": {}
+      "options": {
+        "runner": "vitest",
+        "buildTarget": "portal:esbuild:development",
+        "tsConfig": "apps/portal/tsconfig.spec.json"
+      }
     },
     "serve-static": {
       "continuous": true,
