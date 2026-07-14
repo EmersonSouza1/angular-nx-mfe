@@ -1,2 +1,9 @@
-<app-nx-welcome></app-nx-welcome>
-<router-outlet></router-outlet>
+<header class="topbar">
+  <a class="brand" routerLink="/">{{ title }}</a>
+  <nav aria-label="Módulos do portal">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Início</a>
+    <a routerLink="/fiscal" routerLinkActive="active">Fiscal</a>
+  </nav>
+  <span class="environment">Ambiente local</span>
+</header>
+<main class="content"><router-outlet /></main>

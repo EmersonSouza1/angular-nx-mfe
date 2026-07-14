@@ -1,1 +1,1 @@
-export * from './lib/ui/ui';
+export * from './lib/ui/empty-state.component';

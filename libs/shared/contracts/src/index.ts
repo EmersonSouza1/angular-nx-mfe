@@ -1,1 +1,1 @@
-export * from './lib/contracts/contracts';
+export * from './lib/contracts/module-contracts';
