@@ -1,3 +1,2 @@
-/* You can add global styles to this file, and also import other style files */
-html { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
-body { margin: 0; }
+html, body { min-height: 100%; }
+body { color: var(--portal-text); background: var(--portal-background); }

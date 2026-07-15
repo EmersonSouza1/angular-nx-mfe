@@ -38,6 +38,8 @@
           }
         ],
         "styles": [
+          "bootstrap/dist/css/bootstrap.min.css",
+          "libs/shared/ui/src/styles/design-tokens.scss",
           "apps/portal/src/styles.scss"
         ]
       },
