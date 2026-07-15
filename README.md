@@ -57,3 +57,11 @@ Os servidores dos remotes precisam permitir CORS para o domínio do portal. A po
 ## Regras de arquitetura
 
 Aplicações podem depender apenas de bibliotecas marcadas como `type:shared`. Bibliotecas compartilhadas não podem importar aplicações. Novos módulos devem receber tags `type:app` e `scope:<dominio>` no `project.json`.
+
+## UI e design system
+
+Bootstrap 5 é carregado pelo portal e pelo remote para que ambos funcionem juntos e também de forma independente. Tokens visuais e componentes reutilizáveis ficam em `libs/shared/ui`; os MFEs não devem importar componentes diretamente do portal.
+
+`libs/shared/ui` é também a fronteira de adaptação para a biblioteca corporativa Angular 20. Quando o nome real do pacote e o registry privado forem informados, seus componentes devem ser importados e reexportados por essa biblioteca, evitando espalhar a dependência corporativa pelos MFEs.
+
+Novas telas devem usar os componentes compartilhados e as classes do Bootstrap, sem Angular Material e sem recriar localmente cabeçalhos, estados vazios, espaçamentos ou tokens já existentes.

@@ -30,7 +30,11 @@
             "input": "apps/mfe-fiscal/public"
           }
         ],
-        "styles": ["apps/mfe-fiscal/src/styles.scss"]
+        "styles": [
+          "bootstrap/dist/css/bootstrap.min.css",
+          "libs/shared/ui/src/styles/design-tokens.scss",
+          "apps/mfe-fiscal/src/styles.scss"
+        ]
       },
       "configurations": {
         "production": {
