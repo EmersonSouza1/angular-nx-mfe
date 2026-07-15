@@ -65,3 +65,7 @@ Bootstrap 5 é carregado pelo portal e pelo remote para que ambos funcionem junt
 `libs/shared/ui` é também a fronteira de adaptação para a biblioteca corporativa Angular 20. Quando o nome real do pacote e o registry privado forem informados, seus componentes devem ser importados e reexportados por essa biblioteca, evitando espalhar a dependência corporativa pelos MFEs.
 
 Novas telas devem usar os componentes compartilhados e as classes do Bootstrap, sem Angular Material e sem recriar localmente cabeçalhos, estados vazios, espaçamentos ou tokens já existentes.
+
+## Primeiro fluxo fiscal
+
+A rota `/fiscal/obrigacoes` entrega a primeira fatia vertical do módulo Fiscal, com contratos compartilhados, busca, filtro, indicadores e estados de interface. A fonte `FISCAL_OBLIGATIONS_DATA_SOURCE` isola os dados demonstrativos atuais e deve ser substituída por um adapter HTTP quando o endpoint corporativo for definido.
