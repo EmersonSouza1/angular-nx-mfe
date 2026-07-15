@@ -34,9 +34,25 @@ npm run test
 npm run build
 ```
 
+## Configuração de runtime
+
+O portal carrega `/portal-config.json` antes do bootstrap Angular. Esse arquivo contém URLs de APIs, identificação do sistema, dados públicos do Azure AD e o caminho do manifesto de federação. Ele deve ser substituído no deploy sem recompilar a aplicação.
+
+Campos obrigatórios nesta etapa:
+
+- `environment`: nome, rótulo e indicador de produção;
+- `federationManifestUrl`: caminho do manifesto dos remotes;
+- `apiUrl`, `apiCore` e `apiNotificationUrl`: endpoints externos;
+- `rootUrl`, `systemId` e `systemExternalCode`: identificação do portal;
+- `auth`: `clientId`, `authority` e `redirectUri` públicos, preparados para a futura integração MSAL.
+
+Nunca coloque client secret, token ou senha nesse arquivo: tudo que ele contém é público no navegador.
+
 ## Federação
 
-O host inicializa `assets/federation.manifest.json`. Em outros ambientes, altere as URLs do manifesto durante o deploy sem recompilar o portal. Cada remote deve expor rotas Angular e manter dependências Angular compartilhadas como singleton.
+O host lê de `portal-config.json` qual manifesto deve inicializar. O arquivo local é `assets/federation.manifest.json`. Em homologação e produção, substitua as URLs do manifesto durante o deploy para apontar aos domínios de cada remote, sem recompilar o portal.
+
+Os servidores dos remotes precisam permitir CORS para o domínio do portal. A política CSP do host também deve liberar em `script-src` e `connect-src` os domínios declarados no manifesto. Cada remote deve expor rotas Angular e manter as dependências Angular como singleton com versão estrita.
 
 ## Regras de arquitetura
 

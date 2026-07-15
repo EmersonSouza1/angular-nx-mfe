@@ -1,0 +1,20 @@
+{
+  "environment": {
+    "name": "local",
+    "label": "Ambiente local",
+    "production": false
+  },
+  "federationManifestUrl": "/assets/federation.manifest.json",
+  "apiUrl": "http://localhost:8080/api",
+  "apiVersion": "v1",
+  "rootUrl": "http://localhost:4200",
+  "systemId": "portal-corporativo",
+  "apiCore": "http://localhost:8080/core",
+  "apiNotificationUrl": "http://localhost:8080/notifications",
+  "systemExternalCode": "PORTAL",
+  "auth": {
+    "clientId": "configure-no-deploy",
+    "authority": "https://login.microsoftonline.com/configure-no-deploy",
+    "redirectUri": "http://localhost:4200"
+  }
+}
