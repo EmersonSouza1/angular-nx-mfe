@@ -1,9 +1,11 @@
-<header class="topbar">
-  <a class="brand" routerLink="/">{{ title }}</a>
-  <nav aria-label="Módulos do portal">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Início</a>
-    <a routerLink="/fiscal" routerLinkActive="active">Fiscal</a>
-  </nav>
-  <span class="environment">{{ environmentLabel }}</span>
+<header class="navbar navbar-expand bg-primary navbar-dark shadow-sm">
+  <div class="container-fluid px-3 px-lg-4">
+    <a class="navbar-brand fw-semibold" routerLink="/">{{ title }}</a>
+    <nav class="navbar-nav flex-row gap-1 me-auto" aria-label="Módulos do portal">
+      <a class="nav-link px-3" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Início</a>
+      <a class="nav-link px-3" routerLink="/fiscal" routerLinkActive="active">Fiscal</a>
+    </nav>
+    <span class="environment badge text-bg-light">{{ environmentLabel }}</span>
+  </div>
 </header>
-<main class="content"><router-outlet /></main>
+<main class="container-xl py-4 py-lg-5"><router-outlet /></main>

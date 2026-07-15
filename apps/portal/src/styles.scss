@@ -1,4 +1,2 @@
-/* You can add global styles to this file, and also import other style files */
-html { box-sizing: border-box; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; background: #f8fafc; }
-*, *::before, *::after { box-sizing: inherit; }
-body { margin: 0; }
+html, body { min-height: 100%; }
+body { color: var(--portal-text); background: var(--portal-background); }

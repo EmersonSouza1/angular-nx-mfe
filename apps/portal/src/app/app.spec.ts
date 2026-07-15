@@ -35,7 +35,7 @@ describe('App', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.brand')?.textContent).toContain('Portal Corporativo');
+    expect(compiled.querySelector('.navbar-brand')?.textContent).toContain('Portal Corporativo');
     expect(compiled.querySelector('.environment')?.textContent).toContain('Ambiente de teste');
   });
 });
