@@ -23,7 +23,7 @@
       "options": {
         "outputPath": "dist/apps/portal",
         "browser": "apps/portal/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": ["zone.js", "es-module-shims"],
         "tsConfig": "apps/portal/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
