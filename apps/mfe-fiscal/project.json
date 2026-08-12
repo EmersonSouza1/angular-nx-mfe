@@ -21,7 +21,7 @@
       "options": {
         "outputPath": "dist/apps/mfe-fiscal",
         "browser": "apps/mfe-fiscal/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": ["zone.js", "es-module-shims"],
         "tsConfig": "apps/mfe-fiscal/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [

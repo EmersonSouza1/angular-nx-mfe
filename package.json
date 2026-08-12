@@ -59,6 +59,7 @@
     "@angular/platform-browser": "~20.3.0",
     "@angular/router": "~20.3.0",
     "bootstrap": "~5.3.8",
+    "es-module-shims": "^1.5.12",
     "rxjs": "~7.8.0",
     "zone.js": "~0.15.0"
   }
