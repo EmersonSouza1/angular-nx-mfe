@@ -1,11 +1,11 @@
-<header class="navbar navbar-expand bg-primary navbar-dark shadow-sm">
-  <div class="container-fluid px-3 px-lg-4">
-    <a class="navbar-brand fw-semibold" routerLink="/">{{ title }}</a>
-    <nav class="navbar-nav flex-row gap-1 me-auto" aria-label="Módulos do portal">
-      <a class="nav-link px-3" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Início</a>
-      <a class="nav-link px-3" routerLink="/fiscal" routerLinkActive="active">Fiscal</a>
-    </nav>
-    <span class="environment badge text-bg-light">{{ environmentLabel }}</span>
+<div class="app-shell d-flex">
+  <lib-sidenav [modules]="modules" [brand]="title" [(collapsed)]="sidebarCollapsed" />
+  <div class="app-content flex-grow-1 d-flex flex-column">
+    <header class="topbar navbar bg-primary navbar-dark shadow-sm">
+      <div class="container-fluid px-3 px-lg-4 justify-content-end">
+        <span class="environment badge text-bg-light">{{ environmentLabel }}</span>
+      </div>
+    </header>
+    <main class="container-xl py-4 py-lg-5 flex-grow-1"><router-outlet /></main>
   </div>
-</header>
-<main class="container-xl py-4 py-lg-5"><router-outlet /></main>
+</div>
