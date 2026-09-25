@@ -1,10 +1,14 @@
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FiscalObligation, FiscalObligationStatus } from '@nxseed2/contracts';
 import { EmptyStateComponent, PageHeaderComponent } from '@nxseed2/ui';
 import { take } from 'rxjs';
 import { FiscalObligationsService } from './fiscal-obligations.service';
+
+// Registrado aqui para funcionar tanto no MFE isolado quanto carregado pelo portal.
+registerLocaleData(localePt, 'pt-BR');
 
 @Component({
   selector: 'app-fiscal-obligations',
